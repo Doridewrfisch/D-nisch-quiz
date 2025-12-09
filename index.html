@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dänisch Karteikarten</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="antialiased">
+  <div id="root"></div>
+
+  <script>
+  // Plain JavaScript implementation (no React/Babel)
+  (function () {
+    const initialVocabulary = [
+    { danish: "en ting", german: "eine Sache/ein Ding" },
+    { danish: "det rigtige tal", german: "die richtige Zahl" },
+    { danish: "en kop", german: "eine Tasse" },
+    { danish: "en stol", german: "ein Stuhl" },
+    { danish: "en taske", german: "eine Tasche" },
+    { danish: "en blyant", german: "ein Bleistift" },
+    { danish: "en dør", german: "eine Tür" },
+    { danish: "en flaske", german: "eine Flasche" },
+    { danish: "en kuglepen", german: "ein Kugelschreiber" },
+    { danish: "en bærbar", german: "ein Laptop" },
+    { danish: "en computer", german: "ein Computer" },
+    { danish: "et bord", german: "ein Tisch" },
+    { danish: "at hænge", german: "hängen" },
+    { danish: "et skab", german: "ein Schrank" },
+    { danish: "et pennalhus", german: "ein Federmäppchen" },
+    { danish: "et hæfte", german: "ein Heft" },
+    { danish: "et ur", german: "eine Uhr" },
+    { danish: "et glas", german: "ein Glas" },
+    { danish: "pege på", german: "zeigen auf" },
+    { danish: "at stille", german: "stellen" },
+    { danish: "at tegne", german: "zeichnen" },
+    { danish: "et substantiv", german: "ein Substantiv" },
+    { danish: "ubestemt", german: "unbestimmt" },
+    { danish: "en artikel", german: "ein Artikel" },
+    { danish: "foran", german: "vor/vorne" },
+    { danish: "bestemte", german: "bestimmt" },
+    { danish: "ende på", german: "enden auf" },
+    { danish: "ubetonet", german: "unbetont" },
+    { danish: "en form", german: "eine Form" },
+    { danish: "en konsonant", german: "ein Konsonant" },
+    { danish: "et klasseværelse", german: "ein Klassenzimmer" },
+    { danish: "er der?", german: "gibt es?" },
+    { danish: "et gardin", german: "ein Vorhang" },
+    { danish: "en reol", german: "ein Regal" },
+    { danish: "en opslagstavle", german: "eine Pinnwand" },
+    { danish: "en kalender", german: "ein Kalender" },
+    { danish: "en fødselsdag", german: "ein Geburtstag" },
+    { danish: "hvor mange", german: "wie viele" },
+    { danish: "en væg", german: "eine Wand" },
+    { danish: "et vindue", german: "ein Fenster" },
+    { danish: "en lampe", german: "eine Lampe" },
+    { danish: "ellers", german: "sonst/oder" },
+    { danish: "et ark", german: "ein Blatt (Papier)" },
+    { danish: "fugleperspektiv", german: "Vogelperspektive" },
+    { danish: "en sofa", german: "ein Sofa" },
+    { danish: "en projektor", german: "ein Projektor" },
+    { danish: "en interaktiv tavle", german: "ein interaktives Whiteboard" },
+    { danish: "en skærm", german: "ein Bildschirm" },
+    { danish: "en tavle", german: "eine Tafel" },
+    { danish: "kridt", german: "Kreide" },
+    { danish: "udvekslingsklasse", german: "Austauschklasse" },
+    { danish: "dreng", german: "Junge" },
+    { danish: "lydbesked", german: "Sprachnachricht" },
+    { danish: "fortælle", german: "erzählen" },
+    { danish: "beskrivelse", german: "Beschreibung" },
+    { danish: "loft", german: "Decke" },
+    { danish: "elev", german: "Schüler/in" },
+    { danish: "pige", german: "Mädchen" },
+    { danish: "vand", german: "Wasser" },
+    { danish: "sprog", german: "Sprache" },
+    { danish: "rullegardin", german: "Rollo" },
+    { danish: "filmklip", german: "Videoclip" },
+    { danish: "derefter", german: "danach" },
+    { danish: "egentlig", german: "eigentlich" },
+    { danish: "kun", german: "nur" },
+    { danish: "ud til gangen", german: "zur Flur/zum Gang" },
+    { danish: "midt i", german: "mitten in" },
+    { danish: "så", german: "dann/so" },
+    { danish: "sammen", german: "zusammen" },
+    { danish: "selvfølgelig", german: "selbstverständlich" },
+    { danish: "præsentere", german: "präsentieren" },
+    { danish: "tro", german: "glauben" },
+    { danish: "cirka", german: "circa/ungefähr" },
+    { danish: "time", german: "Stunde" },
+    { danish: "skoletaske", german: "Schultasche" },
+    { danish: "gulv", german: "Boden/Fußboden" },
+    { danish: "altid", german: "immer" },
+    { danish: "mediering", german: "Mediation" },
+    { danish: "frikvarter", german: "Pause" },
+    { danish: "anden", german: "zweite/andere" },
+    { danish: "mediere", german: "vermitteln" },
+    { danish: "betyde", german: "bedeuten" },
+    { danish: "at", german: "dass" },
+    { danish: "andet", german: "anderes" },
+    { danish: "begge", german: "beide" },
+    { danish: "skal", german: "soll/muss" },
+    { danish: "tekst", german: "Text" },
+    { danish: "oversætte", german: "übersetzen" },
+    { danish: "vigtig", german: "wichtig" }
+  ];
+
+    // State
+    let vocabulary = [];
+    let cards = [];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let showDanish = true;
+    let difficultCards = [];
+    let knownCards = [];
+    let showButtons = false;
+    let reviewMode = false;
+    let showManager = false;
+    let editIndex = null;
+
+    // DOM helpers
+    const $ = (sel) => document.querySelector(sel);
+
+    function loadVocabulary() {
+      try {
+        const savedStr = localStorage.getItem('danish-vocabulary');
+        if (savedStr) {
+          vocabulary = JSON.parse(savedStr);
+        } else {
+          vocabulary = initialVocabulary.slice();
+          saveVocabulary(vocabulary);
+        }
+      } catch (err) {
+        vocabulary = initialVocabulary.slice();
+        saveVocabulary(vocabulary);
+      }
+      cards = shuffleArray(vocabulary.slice());
+      render();
+    }
+
+    function saveVocabulary(v) {
+      try { localStorage.setItem('danish-vocabulary', JSON.stringify(v)); } catch (e) { console.error(e); }
+    }
+
+    function shuffleArray(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+    // Actions
+    function addVocabulary(danish, german) {
+      if (!danish || !german) return alert('Beide Felder ausfüllen');
+      vocabulary.push({ danish: danish.trim(), german: german.trim() });
+      saveVocabulary(vocabulary);
+      cards = shuffleArray(vocabulary.slice());
+      renderManager();
+    }
+
+    function deleteVocabulary(index) {
+      if (!confirm('Möchtest du diese Vokabel wirklich löschen?')) return;
+      vocabulary.splice(index, 1);
+      saveVocabulary(vocabulary);
+      cards = shuffleArray(vocabulary.slice());
+      renderManager();
+    }
+
+    function startEdit(i) { editIndex = i; renderManager(); }
+    function saveEdit(danish, german) {
+      if (editIndex === null) return;
+      vocabulary[editIndex] = { danish: danish.trim(), german: german.trim() };
+      saveVocabulary(vocabulary);
+      editIndex = null;
+      cards = shuffleArray(vocabulary.slice());
+      renderManager();
+    }
+
+    function cancelEdit() { editIndex = null; renderManager(); }
+
+    function shuffleCards() { cards = shuffleArray(vocabulary.slice()); currentIndex = 0; isFlipped = false; showButtons = false; reviewMode = false; render(); }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      if (!isFlipped) showButtons = true;
+      const cardInner = $('#cardInner');
+      if (cardInner) {
+        if (isFlipped) cardInner.classList.add('flipped'); else cardInner.classList.remove('flipped');
+      }
+      renderCard();
+    }
+
+    function markAsKnown() {
+      const current = cards[currentIndex];
+      if (!knownCards.find(c => c.danish === current.danish)) knownCards.push(current);
+      difficultCards = difficultCards.filter(c => c.danish !== current.danish);
+      nextCard();
+    }
+
+    function markAsDifficult() { const current = cards[currentIndex]; if (!difficultCards.find(c=>c.danish===current.danish)) difficultCards.push(current); nextCard(); }
+
+    function nextCard() { showButtons = false; isFlipped = false; if (currentIndex < cards.length - 1) currentIndex++; else if (reviewMode && difficultCards.length>0) currentIndex = 0; render(); }
+    function prevCard() { if (currentIndex>0) { currentIndex--; isFlipped=false; showButtons=false; render(); } }
+
+    function toggleDirection() { showDanish = !showDanish; isFlipped = false; showButtons = false; render(); }
+
+    function startReviewMode() {
+      if (!difficultCards || difficultCards.length === 0) {
+        return alert('Keine markierten schwierigen Karten zum Wiederholen.');
+      }
+      cards = shuffleArray(difficultCards.slice());
+      currentIndex = 0;
+      isFlipped = false;
+      showButtons = false;
+      reviewMode = true;
+      render();
+    }
+
+    function resetProgress() { difficultCards = []; knownCards = []; shuffleCards(); }
+
+    // Rendering
+    function render() {
+      renderMain();
+      renderManager();
+    }
+
+    function renderMain() {
+      const root = $('#root');
+      const currentCard = cards[currentIndex] || { danish: '', german: '' };
+      const frontText = showDanish ? currentCard.danish : currentCard.german;
+      const backText = showDanish ? currentCard.german : currentCard.danish;
+
+      root.innerHTML = `
+        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
+          <div class="max-w-2xl w-full">
+            <div class="text-center mb-6">
+              <h1 class="text-4xl font-bold text-gray-800 mb-2">Dänisch Karteikarten</h1>
+              <p class="text-gray-600">Klicke auf die Karte zum Umdrehen</p>
+              <button id="toggleManager" class="mt-3 bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition">📚 Vokabeln verwalten (${vocabulary.length})</button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-4 mb-4">
+              <div class="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <p class="text-2xl font-bold text-green-600">${knownCards.length}</p>
+                  <p class="text-sm text-gray-600">Gewusst ✓</p>
+                </div>
+                <div>
+                  <p class="text-2xl font-bold text-red-600">${difficultCards.length}</p>
+                  <p class="text-sm text-gray-600">Schwierig</p>
+                </div>
+                <div>
+                  <p class="text-2xl font-bold text-indigo-600">${cards.length}</p>
+                  <p class="text-sm text-gray-600">Gesamt</p>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <div id="card" class="select-none cursor-pointer p-8 rounded-lg shadow-inner text-center">
+                  <div id="cardInner" class="relative w-full h-full transition-transform duration-500 transform-style-3d">
+                    <div id="cardFront" class="card-face absolute inset-0 flex items-center justify-center p-4 rounded-lg bg-white">
+                      <div class="text-2xl font-semibold text-gray-800">${escapeHtml(frontText)}</div>
+                    </div>
+                    <div id="cardBack" class="card-face absolute inset-0 flex items-center justify-center p-4 rounded-lg bg-white rotate-y-180">
+                      <div class="text-2xl font-semibold text-gray-800">${escapeHtml(backText)}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                  <div class="flex gap-2">
+                    <button id="prevBtn" class="px-3 py-2 bg-gray-200 rounded">⟨</button>
+                    <button id="nextBtn" class="px-3 py-2 bg-gray-200 rounded">⟩</button>
+                    <button id="shuffleBtn" class="px-3 py-2 bg-blue-500 text-white rounded">🔀</button>
+                  </div>
+
+                  <div class="flex gap-2">
+                    <button id="toggleDir" class="px-3 py-2 bg-gray-200 rounded">↔️</button>
+                    <button id="reviewBtn" class="px-3 py-2 bg-yellow-400 rounded">Review</button>
+                    <button id="resetBtn" class="px-3 py-2 bg-red-500 text-white rounded">Reset</button>
+                  </div>
+                </div>
+
+                ${showButtons ? `
+                  <div class="flex gap-2 mt-4">
+                    <button id="knownBtn" class="flex-1 bg-green-600 text-white px-4 py-2 rounded">Gewusst</button>
+                    <button id="difficultBtn" class="flex-1 bg-red-600 text-white px-4 py-2 rounded">Schwierig</button>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Attach listeners
+      $('#toggleManager').addEventListener('click', () => { showManager = true; render(); });
+      const cardEl = $('#card'); if (cardEl) cardEl.addEventListener('click', () => { flipCard(); });
+      $('#prevBtn').addEventListener('click', prevCard);
+      $('#nextBtn').addEventListener('click', nextCard);
+      $('#shuffleBtn').addEventListener('click', shuffleCards);
+      $('#toggleDir').addEventListener('click', toggleDirection);
+      $('#reviewBtn').addEventListener('click', startReviewMode);
+      $('#resetBtn').addEventListener('click', resetProgress);
+      if (showButtons) { $('#knownBtn').addEventListener('click', markAsKnown); $('#difficultBtn').addEventListener('click', markAsDifficult); }
+    }
+
+    // Add CSS for flip animation (in JS so it's included in single file)
+    (function addFlipStyles(){
+      const css = `
+        .card-face { backface-visibility: hidden; transform-style: preserve-3d; }
+        #cardInner { transform-style: preserve-3d; transition: transform 600ms; }
+        #cardInner.flipped { transform: rotateY(180deg); }
+        .rotate-y-180 { transform: rotateY(180deg); }
+      `;
+      const style = document.createElement('style'); style.appendChild(document.createTextNode(css)); document.head.appendChild(style);
+    })();
+
+    function renderManager() {
+      // If not in manager mode, nothing to do
+      if (!showManager) return;
+      const root = $('#root');
+      root.innerHTML = `
+        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+              <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Vokabel-Verwaltung</h1>
+                <button id="backBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">Zurück zum Lernen</button>
+              </div>
+
+              <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-4 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-3">${editIndex !== null ? 'Vokabel bearbeiten' : 'Neue Vokabel hinzufügen'}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Dänisch</label>
+                    <input id="danishInput" type="text" placeholder="z.B. en bog" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Deutsch</label>
+                    <input id="germanInput" type="text" placeholder="z.B. ein Buch" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none" />
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button id="saveVocabBtn" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition">${editIndex !== null ? 'Speichern' : '➕ Vokabel hinzufügen'}</button>
+                  ${editIndex !== null ? '<button id="cancelEditBtn" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Abbrechen</button>' : ''}
+                </div>
+              </div>
+
+              <div class="mb-4"><h3 class="text-lg font-bold text-gray-800 mb-2">Gesamt: ${vocabulary.length} Vokabeln</h3></div>
+
+              <div class="space-y-2 max-h-96 overflow-y-auto">
+                ${vocabulary.map((vocab, index) => `
+                  <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-4 flex justify-between items-center hover:bg-gray-100 transition">
+                    <div class="flex-1">
+                      <p class="font-semibold text-indigo-600">${escapeHtml(vocab.danish)}</p>
+                      <p class="text-gray-700">${escapeHtml(vocab.german)}</p>
+                    </div>
+                    <div class="flex gap-2">
+                      <button data-edit="${index}" class="editBtn bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition">✏️</button>
+                      <button data-delete="${index}" class="deleteBtn bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition">🗑️</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Prefill inputs if editing
+      const danishInput = $('#danishInput');
+      const germanInput = $('#germanInput');
+      if (editIndex !== null) {
+        danishInput.value = vocabulary[editIndex].danish;
+        germanInput.value = vocabulary[editIndex].german;
+      } else { danishInput.value = ''; germanInput.value = ''; }
+
+      $('#backBtn').addEventListener('click', () => { showManager = false; editIndex = null; render(); });
+      $('#saveVocabBtn').addEventListener('click', () => {
+        const d = danishInput.value.trim();
+        const g = germanInput.value.trim();
+        if (!d || !g) return alert('Beide Felder ausfüllen');
+        if (editIndex !== null) saveEdit(d, g); else addVocabulary(d, g);
+      });
+      const cancelBtn = $('#cancelEditBtn'); if (cancelBtn) cancelBtn.addEventListener('click', cancelEdit);
+
+      // Attach edit/delete handlers
+      document.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', (e) => { startEdit(Number(e.currentTarget.dataset.edit)); }));
+      document.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', (e) => { deleteVocabulary(Number(e.currentTarget.dataset.delete)); }));
+    }
+
+    function renderCard() {
+      const cardInner = $('#cardInner');
+      const cardFront = $('#cardFront');
+      const cardBack = $('#cardBack');
+      if (!cardInner || !cardFront || !cardBack) return;
+      const currentCard = cards[currentIndex] || { danish: '', german: '' };
+      const frontText = showDanish ? currentCard.danish : currentCard.german;
+      const backText = showDanish ? currentCard.german : currentCard.danish;
+      cardFront.innerHTML = `<div class="text-2xl font-semibold text-gray-800">${escapeHtml(frontText)}</div>`;
+      cardBack.innerHTML = `<div class="text-2xl font-semibold text-gray-800">${escapeHtml(backText)}</div>`;
+      if (isFlipped) cardInner.classList.add('flipped'); else cardInner.classList.remove('flipped');
+    }
+
+    function escapeHtml(str) { if (!str) return ''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // init
+    loadVocabulary();
+  })();
+  </script>
+  </body>
+  </html>
